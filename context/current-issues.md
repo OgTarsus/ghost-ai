@@ -1,1 +1,0 @@
-when i click the continue button to sign-in after cloudflare and some other verifications, the page becomes static and shows "rendering", until i refresh cache or page before getting access to the editor page. This also happens with the sign out button and until i refresh cache or page before i can get access to the authentication page
