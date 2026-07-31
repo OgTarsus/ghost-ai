@@ -8,19 +8,24 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Set up shadcn/ui primitives and the dark theme foundation for the app shell.
+- Complete the Clerk authentication flow for the Next.js app, including provider setup, protected routes, auth pages, and account menu integration.
 
 ## Completed
 
-- Reviewed the design-system spec and project context files.
+- Reviewed the authentication spec and project context files.
+- Implemented Clerk provider wrapping in the root layout using the app’s CSS variables and the Clerk dark theme.
+- Added sign-in and sign-up pages with a minimal two-panel experience that respects the app’s dark UI tokens.
+- Added a root-level proxy route protection file with public auth routes and protected defaults.
+- Added auth-aware redirects for the home page and editor route.
+- Added a Clerk UserButton to the editor navbar for profile settings and sign-out.
 
 ## In Progress
 
-- Installing and configuring shadcn/ui components and supporting utilities.
+- Verifying the full authentication flow and production build.
 
 ## Next Up
 
-- Add the requested UI components and wire them into the home page.
+- Confirm the production build passes and address any remaining issues if they appear.
 
 ## Open Questions
 
@@ -28,7 +33,8 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Architecture Decisions
 
-- The shared UI foundations will use shadcn/ui components with Tailwind-based CSS variables and dark-only styling.
+- Clerk authentication is now integrated at the root layout level and protected by a proxy-based route matcher rather than a middleware file.
+- Auth pages use the existing design tokens through Clerk appearance variables instead of hardcoded colors.
 
 ## Session Notes
 
@@ -36,21 +42,5 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Implementation Progress
 
-- Editor chrome components implemented: `EditorNavbar` and `ProjectSidebar`.
-- Dialog pattern is prepared using existing UI dialog primitives.
-
-## Current Phase
-
-- In progress
-
-## In Progress
-
-- Integrate the new editor chrome into the app shell and home page.
-
-## Next Up
-
-- Wire `EditorNavbar` and `ProjectSidebar` into the home page layout and test interactions.
-
-## Open Questions
-
-- None at the moment.
+- Editor chrome components are in place and now include a Clerk user menu slot.
+- The home route now redirects authenticated users to the editor and unauthenticated users to sign-in.
