@@ -10,12 +10,6 @@ import { ProjectDialogs } from "@/components/editor/project-dialogs";
 import { ProjectSidebar } from "@/components/editor/project-sidebar";
 import { useProjectDialogs } from "@/components/editor/use-project-dialogs";
 
-const initialProjects = [
-  { id: "1", name: "Aurora Launch", slug: "aurora-launch", isOwned: true },
-  { id: "2", name: "Design System", slug: "design-system", isOwned: false },
-  { id: "3", name: "Platform Roadmap", slug: "platform-roadmap", isOwned: true },
-];
-
 export function EditorShell() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const {
@@ -33,7 +27,7 @@ export function EditorShell() {
     submitCreate,
     submitRename,
     submitDelete,
-  } = useProjectDialogs({ initialProjects });
+  } = useProjectDialogs();
 
   return (
     <div className="relative min-h-screen bg-base text-copy-primary">

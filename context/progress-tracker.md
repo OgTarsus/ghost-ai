@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Implement the Prisma-backed project data layer, including schema models, a cached Prisma client singleton, and migration support.
+- Implement the backend project API routes for listing, creating, renaming, and deleting projects with Clerk-based ownership checks.
 
 ## Completed
 
@@ -21,14 +21,16 @@ Update this file whenever the current phase, active feature, or implementation s
 - Added Prisma project models for Project and ProjectCollaborator, including the requested relations, indexes, and enum fields.
 - Created a cached Prisma client singleton in lib/prisma.ts using the configured Postgres adapter.
 - Generated the Prisma client successfully and verified the app builds.
+- Added backend project routes for listing projects, creating projects, renaming projects, and deleting projects.
+- Enforced Clerk authentication for all project routes and owner-only access for rename/delete operations.
 
 ## In Progress
 
-- Finalizing Prisma migration execution in the current environment.
+- Validating the backend API behavior and build output.
 
 ## Next Up
 
-- Resolve the remaining Prisma CLI migration environment issue if the local database connection needs to be supplied differently in this shell.
+- Exercise the new API routes with authenticated and unauthorized requests if a runtime check is needed.
 
 ## Open Questions
 
