@@ -42,3 +42,4 @@ next-env.d.ts
 
 
 /context/current-issues.md
+/app/generated/prisma

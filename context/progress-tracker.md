@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Implement the project dialogs and editor home experience, including create, rename, and delete flows, sidebar actions, and mobile sidebar behavior.
+- Implement the Prisma-backed project data layer, including schema models, a cached Prisma client singleton, and migration support.
 
 ## Completed
 
@@ -18,14 +18,17 @@ Update this file whenever the current phase, active feature, or implementation s
 - Added a root-level proxy route protection file with public auth routes and protected defaults.
 - Added auth-aware redirects for the home page and editor route.
 - Added a Clerk UserButton to the editor navbar for profile settings and sign-out.
+- Added Prisma project models for Project and ProjectCollaborator, including the requested relations, indexes, and enum fields.
+- Created a cached Prisma client singleton in lib/prisma.ts using the configured Postgres adapter.
+- Generated the Prisma client successfully and verified the app builds.
 
 ## In Progress
 
-- Implementing the project dialogs and editor home experience for the editor workspace.
+- Finalizing Prisma migration execution in the current environment.
 
 ## Next Up
 
-- Verify the new dialogs and editor home flow, then confirm the app builds without issues.
+- Resolve the remaining Prisma CLI migration environment issue if the local database connection needs to be supplied differently in this shell.
 
 ## Open Questions
 
