@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Complete the Clerk authentication flow for the Next.js app, including provider setup, protected routes, auth pages, and account menu integration.
+- Implement the project dialogs and editor home experience, including create, rename, and delete flows, sidebar actions, and mobile sidebar behavior.
 
 ## Completed
 
@@ -21,11 +21,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## In Progress
 
-- Verifying the full authentication flow and production build.
+- Implementing the project dialogs and editor home experience for the editor workspace.
 
 ## Next Up
 
-- Confirm the production build passes and address any remaining issues if they appear.
+- Verify the new dialogs and editor home flow, then confirm the app builds without issues.
 
 ## Open Questions
 
