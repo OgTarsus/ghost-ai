@@ -8,9 +8,13 @@ import { Button } from "@/components/ui/button";
 import { EditorNavbar } from "@/components/editor/editor-navbar";
 import { ProjectDialogs } from "@/components/editor/project-dialogs";
 import { ProjectSidebar } from "@/components/editor/project-sidebar";
-import { useProjectDialogs } from "@/components/editor/use-project-dialogs";
+import { useProjectDialogs, type Project } from "@/components/editor/use-project-dialogs";
 
-export function EditorShell() {
+export interface EditorShellProps {
+  initialProjects?: Project[];
+}
+
+export function EditorShell({ initialProjects = [] }: EditorShellProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const {
     projects,
@@ -27,7 +31,7 @@ export function EditorShell() {
     submitCreate,
     submitRename,
     submitDelete,
-  } = useProjectDialogs();
+  } = useProjectDialogs({ initialProjects });
 
   return (
     <div className="relative min-h-screen bg-base text-copy-primary">

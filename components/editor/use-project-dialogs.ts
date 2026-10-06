@@ -1,4 +1,5 @@
-import { useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 export interface Project {
   id: string;
@@ -22,12 +23,17 @@ export function slugify(value: string) {
 }
 
 export function useProjectDialogs({ initialProjects = [] }: UseProjectDialogsOptions = {}) {
+  const router = useRouter();
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [dialogMode, setDialogMode] = useState<ProjectDialogMode>(null);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [formName, setFormName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pendingTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setProjects(initialProjects);
+  }, [initialProjects]);
 
   const selectedProject = useMemo(() => {
     if (!selectedProjectId) {
@@ -80,7 +86,7 @@ export function useProjectDialogs({ initialProjects = [] }: UseProjectDialogsOpt
     setIsSubmitting(false);
   };
 
-  const submitCreate = (event?: FormEvent<HTMLFormElement>) => {
+  const submitCreate = async (event?: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
 
     const nextName = formName.trim();
@@ -92,28 +98,40 @@ export function useProjectDialogs({ initialProjects = [] }: UseProjectDialogsOpt
 
     setIsSubmitting(true);
 
-    clearPendingTimer();
-    pendingTimerRef.current = window.setTimeout(() => {
-      pendingTimerRef.current = null;
+    try {
+      const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: nextName }),
+      });
 
-      if (!dialogMode) {
-        return;
+      if (!response.ok) {
+        throw new Error("Failed to create project");
       }
 
+      const project = (await response.json()) as { id: string; name: string };
+
       setProjects((currentProjects) => [
-        ...currentProjects,
         {
-          id: `${Date.now()}`,
-          name: nextName,
-          slug: nextSlug,
+          id: project.id,
+          name: project.name,
+          slug: slugify(project.name),
           isOwned: true,
         },
+        ...currentProjects,
       ]);
+
       closeDialog();
-    }, 120);
+      router.push(`/editor/${project.id}`);
+      router.refresh();
+    } catch {
+      setIsSubmitting(false);
+    }
   };
 
-  const submitRename = (event?: FormEvent<HTMLFormElement>) => {
+  const submitRename = async (event?: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
 
     if (!selectedProject) {
@@ -128,47 +146,67 @@ export function useProjectDialogs({ initialProjects = [] }: UseProjectDialogsOpt
 
     setIsSubmitting(true);
 
-    clearPendingTimer();
-    pendingTimerRef.current = window.setTimeout(() => {
-      pendingTimerRef.current = null;
+    try {
+      const response = await fetch(`/api/projects/${selectedProject.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: nextName }),
+      });
 
-      if (!dialogMode) {
-        return;
+      if (!response.ok) {
+        throw new Error("Failed to rename project");
       }
+
+      const updatedProject = (await response.json()) as { id: string; name: string };
 
       setProjects((currentProjects) =>
         currentProjects.map((project) =>
           project.id === selectedProject.id
             ? {
                 ...project,
-                name: nextName,
-                slug: slugify(nextName),
+                name: updatedProject.name,
+                slug: slugify(updatedProject.name),
               }
             : project,
         ),
       );
+
       closeDialog();
-    }, 120);
+      router.refresh();
+    } catch {
+      setIsSubmitting(false);
+    }
   };
 
-  const submitDelete = () => {
+  const submitDelete = async () => {
     if (!selectedProject) {
       return;
     }
 
     setIsSubmitting(true);
 
-    clearPendingTimer();
-    pendingTimerRef.current = window.setTimeout(() => {
-      pendingTimerRef.current = null;
+    try {
+      const response = await fetch(`/api/projects/${selectedProject.id}`, {
+        method: "DELETE",
+      });
 
-      if (!dialogMode) {
-        return;
+      if (!response.ok) {
+        throw new Error("Failed to delete project");
       }
 
       setProjects((currentProjects) => currentProjects.filter((project) => project.id !== selectedProject.id));
       closeDialog();
-    }, 120);
+
+      if (window.location.pathname === `/editor/${selectedProject.id}`) {
+        router.push("/editor");
+      }
+
+      router.refresh();
+    } catch {
+      setIsSubmitting(false);
+    }
   };
 
   return {
