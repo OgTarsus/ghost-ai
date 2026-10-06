@@ -4,6 +4,14 @@ import { dark } from "@clerk/ui/themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+if (!clerkPublishableKey) {
+  throw new Error(
+    "Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY. Add it to your .env.local or .env file before running the app.",
+  );
+}
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -46,10 +54,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider
+          publishableKey={clerkPublishableKey}
           appearance={clerkAppearance}
           signInUrl="/sign-in"
           signUpUrl="/sign-up"
-          // afterSignOutUrl="/sign-in"
         >
           {children}
         </ClerkProvider>

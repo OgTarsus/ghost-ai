@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Implement the backend project API routes for listing, creating, renaming, and deleting projects with Clerk-based ownership checks.
+- Implement the owner-managed project sharing dialog with collaborator APIs and Clerk profile enrichment.
 
 ## Completed
 
@@ -23,14 +23,21 @@ Update this file whenever the current phase, active feature, or implementation s
 - Generated the Prisma client successfully and verified the app builds.
 - Added backend project routes for listing projects, creating projects, renaming projects, and deleting projects.
 - Enforced Clerk authentication for all project routes and owner-only access for rename/delete operations.
+- Added the room-level editor access helper and access-denied UI for missing or unauthorized projects.
+- Built the /editor/[roomId] workspace shell with project-name navbar, sidebar highlighting, canvas placeholder, and AI placeholder pane.
+- Moved room workspace event handlers into a client component so no callbacks cross the server/client boundary.
+- Added an owner-managed share dialog with collaborator listing, invite/remove actions, Clerk profile enrichment, and project-link copy feedback.
+- Added authenticated collaborator API routes with server-side owner enforcement for mutations.
+- Increased the editor sidebar toggle icon size.
+- Refined the share dialog with a workspace-link card, compact invite row, and owner/collaborator access rows.
 
 ## In Progress
 
-- Validating the backend API behavior and build output.
+- None.
 
 ## Next Up
 
-- Exercise the new API routes with authenticated and unauthorized requests if a runtime check is needed.
+- Implement the next editor feature unit defined by its feature spec.
 
 ## Open Questions
 
