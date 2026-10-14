@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Implement the owner-managed project sharing dialog with collaborator APIs and Clerk profile enrichment.
+- Implement the floating shape panel for canvas node creation and verify the drag-and-drop node flow works without TypeScript errors.
 
 ## Completed
 
@@ -30,18 +30,37 @@ Update this file whenever the current phase, active feature, or implementation s
 - Added authenticated collaborator API routes with server-side owner enforcement for mutations.
 - Increased the editor sidebar toggle icon size.
 - Refined the share dialog with a workspace-link card, compact invite row, and owner/collaborator access rows.
+- Defined the Liveblocks `Presence` and `UserMeta` contract in the app config.
+- Implemented the cached Liveblocks server client with deterministic cursor colors.
+- Added the authenticated Liveblocks room-token route at `/api/liveblocks-auth`, including Clerk auth, project access enforcement, room creation, and user metadata attachment.
+- Verified the production build passes successfully.
+- Added shared canvas node/edge types and a Liveblocks-backed React Flow canvas with a room-scoped provider, required initial presence, loose connections, fit view, MiniMap, and dot background.
+- Corrected the Liveblocks auth route to accept the room ID payload and return the token response in the format expected by Liveblocks.
+- Fixed canvas type errors for initial presence and the MiniMap node callback.
+- Verified `npm run build` passes with exit code 0 and restarted the dev server successfully.
+- Confirmed the Liveblocks auth route is registered on a fresh dev server (unauthenticated requests return the expected 401 instead of 404).
+- Prevented Clerk UserButton hydration markup mismatch with matching server/client snapshots.
+- Verified the hydration fix with focused ESLint and TypeScript checks.
+- Imported React Flow’s published stylesheet and added a visible token-based dot pattern to the canvas, loading fallback, and error fallback.
+- Verified the stylesheet and canvas background changes with a successful production build.
+- Added the shared canvas node shape catalog with default sizes for rectangle, diamond, circle, pill, cylinder, and hexagon.
+- Added a floating bottom shape panel with draggable shape buttons and drag payloads that include the shape name and default size.
+- Added drag-over and drop handling to the canvas so dropped shapes create new nodes at the cursor position in React Flow coordinates.
+- Added a custom canvas node renderer that displays the label on a bordered node container for all supported shapes.
+- Confirmed the new shape node creation flow is integrated into the existing Liveblocks canvas with a custom node type.
 
 ## In Progress
 
-- None.
+- Fix the Liveblocks auth contract so room tokens are returned in the format the client expects and the timed-out auth loop stops.
+- Validate the shape-panel implementation with a production build and resolve any remaining type issues.
 
 ## Next Up
 
-- Implement the next editor feature unit defined by its feature spec.
+- Run the production build to confirm the canvas auth flow and shape panel compile cleanly and the feature is ready.
 
 ## Open Questions
 
-- None at the moment.
+- None at this time.
 
 ## Architecture Decisions
 
@@ -56,3 +75,4 @@ Update this file whenever the current phase, active feature, or implementation s
 
 - Editor chrome components are in place and now include a Clerk user menu slot.
 - The home route now redirects authenticated users to the editor and unauthenticated users to sign-in.
+- The canvas now includes a floating bottom shape tray and node creation flow for new architecture blocks.

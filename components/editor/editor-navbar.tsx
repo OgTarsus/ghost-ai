@@ -12,15 +12,36 @@ export interface EditorNavbarProps {
   title?: string;
   leftSlot?: React.ReactNode;
   rightSlot?: React.ReactNode;
+  showWorkspaceSave?: boolean;
+  workspaceSaveState?: "idle" | "saving" | "saved" | "error";
+  onWorkspaceSave?: () => void;
 }
 
-export function EditorNavbar({ isSidebarOpen, onToggleSidebar, title, leftSlot, rightSlot }: EditorNavbarProps) {
+export function EditorNavbar({
+  isSidebarOpen,
+  onToggleSidebar,
+  title,
+  leftSlot,
+  rightSlot,
+  showWorkspaceSave = false,
+  workspaceSaveState = "idle",
+  onWorkspaceSave,
+}: EditorNavbarProps) {
+  const workspaceSaveLabel =
+    workspaceSaveState === "saving"
+      ? "Saving..."
+      : workspaceSaveState === "saved"
+        ? "Saved"
+        : workspaceSaveState === "error"
+          ? "Error"
+          : "Save";
+
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4",
         title ? "h-16" : "h-14",
-        "bg-surface border-b border-surface-border",
+        "border-b border-surface-border bg-surface",
       )}
     >
       <div className="flex min-w-0 items-center gap-2">
@@ -47,7 +68,21 @@ export function EditorNavbar({ isSidebarOpen, onToggleSidebar, title, leftSlot, 
         {!title ? <div className="h-4 w-28 rounded-full bg-subtle/70" aria-hidden="true" /> : null}
       </div>
 
-      <div className="flex items-center gap-2">{rightSlot}</div>
+      <div className="flex items-center gap-2">
+        {showWorkspaceSave ? (
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="h-9 px-3"
+            onClick={onWorkspaceSave}
+            disabled={workspaceSaveState === "saving"}
+          >
+            {workspaceSaveLabel}
+          </Button>
+        ) : null}
+        {rightSlot}
+      </div>
     </header>
   );
 }

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@xyflow/react/dist/style.css";
 
 :root {
   --bg-base: #080809;
@@ -40,6 +41,11 @@
   --color-state-warning: var(--state-warning);
 }
 
+:root {
+  --font-geist-sans: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-geist-mono: "SFMono-Regular", "Cascadia Code", "Consolas", monospace;
+}
+
 html {
   color-scheme: dark;
   background-color: var(--bg-base);
@@ -50,7 +56,14 @@ body {
   min-height: 100vh;
   background: radial-gradient(circle at top, rgba(0, 200, 212, 0.14), transparent 30%), var(--bg-base);
   color: var(--text-primary);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-geist-sans);
+}
+
+.canvas-dot-background {
+  background-color: var(--bg-base);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1.1px, transparent 1.5px);
+  background-position: center;
+  background-size: 20px 20px;
 }
 
 * {

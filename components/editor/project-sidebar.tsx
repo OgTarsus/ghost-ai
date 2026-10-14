@@ -50,9 +50,9 @@ export function ProjectSidebar({
         inert={!isOpen}
         className={cn(
           isWorkspace
-            ? "fixed bottom-3 left-3 top-[4.75rem] z-40 w-[min(17rem,calc(100vw-1.5rem))] rounded-2xl border border-surface-border bg-surface shadow-lg transition-transform duration-300 lg:static lg:z-0 lg:h-auto lg:w-[17rem] lg:shrink-0 lg:translate-x-0"
-            : "fixed left-0 top-0 z-50 h-full w-80 border-r border-surface-border bg-surface shadow-lg transition-transform duration-300",
-          isOpen ? "translate-x-0" : cn("-translate-x-full", isWorkspace && "lg:hidden"),
+            ? "fixed bottom-3 left-3 top-[4.75rem] z-40 w-[min(17rem,calc(100vw-1.5rem))] overflow-hidden border border-surface-border bg-surface/85 shadow-lg shadow-black/25 backdrop-blur-sm transition-transform duration-300 lg:bottom-3 lg:left-3 lg:top-[4.75rem] lg:w-[17rem]"
+            : "fixed left-0 top-0 z-50 h-full w-80 overflow-hidden border-r border-surface-border bg-surface/85 shadow-lg shadow-black/25 backdrop-blur-sm transition-transform duration-300",
+          isOpen ? "translate-x-0" : "-translate-x-[calc(100%+1.5rem)]",
         )}
       >
         <div className="flex h-full flex-col">
