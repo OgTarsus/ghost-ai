@@ -53,6 +53,7 @@ export default async function EditorRoomPage({
       project={{ id: project.id, name: project.name }}
       projects={sidebarProjects}
       isOwner={project.ownerId === userId}
+      roomId={roomId}
     />
   );
 }
